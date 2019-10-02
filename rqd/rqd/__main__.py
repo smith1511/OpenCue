@@ -91,7 +91,6 @@ import os
 import platform
 import socket
 import sys
-from logging.handlers import SysLogHandler
 
 import rqlog
 rqlog.setupLogging()

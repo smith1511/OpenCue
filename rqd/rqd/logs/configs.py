@@ -55,14 +55,9 @@ APP_INSIGHTS_LOGGING = {
             "level":     "DEBUG",
             'formatter': 'simple',
         },
-        "syslog": {
-            "class":     "logging.handlers.SysLogHandler",
-            "level":     "DEBUG",
-            'formatter': 'simple',
-        },
         "appinsights": {
             "class":     "applicationinsights.logging.LoggingHandler",
-            "instrumentation_key":  "4dcab37a-38ad-4e15-bd4a-4cbc47b93f30",
+            "instrumentation_key":  "00000000-0000-0000-0000-000000000000",
             "level":     "DEBUG",
             'formatter': 'simple',
         }
@@ -70,7 +65,7 @@ APP_INSIGHTS_LOGGING = {
     'loggers': {
         '': {
             'level': 'DEBUG',
-            'handlers': ['console', 'syslog', 'appinsights'],
+            'handlers': ['console', 'appinsights'],
             'filters': ['hostname'],
         }
     }
@@ -90,7 +85,7 @@ SPLUNK_LOGGING = {
       }
     },
     'handlers': {
-        'splunk': { # handler for splunk, level Warning. to not have many logs sent to splunk
+        'splunk': {
             'level': 'WARNING',
             'class': 'splunk_logging_handler.SplunkLoggingHandler',
             'url': os.getenv('SPLUNK_HTTP_COLLECTOR_URL'),
@@ -106,11 +101,11 @@ SPLUNK_LOGGING = {
             'formatter': 'simple',
         },
     },
-    'loggers': { # the logger, root is used
+    'loggers': {
         '': {
             'handlers': ['console', 'splunk'],
             'level': 'DEBUG',
-            'propagate': 'False', # does not give logs to other logers
+            'propagate': 'False',
             'filters': ['hostname'],
         }
     }
