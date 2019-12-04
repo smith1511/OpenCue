@@ -96,6 +96,8 @@ CONFIG_FILE = '/etc/opencue/rqd.conf'
 if '-c' in sys.argv:
     CONFIG_FILE = sys.argv[sys.argv.index('-c') + 1]
 
+LOGGING_CONFIG_FILE = '/etc/opencue/rqd_logging.conf'
+
 OVERRIDE_CORES = None # number of cores. ex: None or 8
 OVERRIDE_IS_DESKTOP = None # Force rqd to run in 'desktop' mode
 OVERRIDE_PROCS = None # number of physical cpus. ex: None or 2
@@ -173,6 +175,8 @@ try:
             DEFAULT_FACILITY = config.get(__section, "DEFAULT_FACILITY")
         if config.has_option(__section, "LAUNCH_FRAME_USER_GID"):
             LAUNCH_FRAME_USER_GID = config.getint(__section, "LAUNCH_FRAME_USER_GID")
+        if config.has_option(__section, "LOGGING_CONFIG_FILE"):
+            LOGGING_CONFIG_FILE = config.get(__section, "LOGGING_CONFIG_FILE")
 except Exception, e:
     logging.warning("Failed to read values from config file %s due to %s at %s" % (CONFIG_FILE, e, traceback.extract_tb(sys.exc_info()[2])))
 

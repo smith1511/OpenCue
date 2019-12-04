@@ -91,28 +91,9 @@ import os
 import platform
 import socket
 import sys
-from logging.handlers import SysLogHandler
 
-
-def setupLogging():
-    """Sets up the logging for RQD.
-       Logs to /var/log/messages"""
-    # TODO(bcipriano) These should be config based. (Issue #72)
-    consoleFormat = '%(asctime)s %(levelname)-9s rqd3-%(module)-10s %(message)s'
-    consoleLevel  = log.DEBUG
-    fileFormat    = '%(asctime)s %(levelname)-9s rqd3-%(module)-10s %(message)s'
-    fileLevel     = log.WARNING # Equal to or greater than the consoleLevel
-
-    log.basicConfig(level=consoleLevel, format=consoleFormat)
-    try:
-        logfile = SysLogHandler(address='/dev/log')
-    except socket.error:
-        logfile = SysLogHandler()
-    logfile.setLevel(fileLevel)
-    logfile.setFormatter(log.Formatter(fileFormat))
-    log.getLogger('').addHandler(logfile)
-
-setupLogging()
+import rqlog
+rqlog.setupLogging()
 
 from rqcore import RqCore
 import rqutil
