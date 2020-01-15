@@ -193,3 +193,32 @@ jobs:
   - publish: $(ARTIFACT_DIRECTORY)/demo_data-$(buildId).sql
     artifact: Demo SQL Data
     displayName: Publish Demo SQL Data
+
+
+- job: createRpmArtifacts
+  displayName: Create RPM Artifacts
+  dependsOn: |
+    setBuildId
+    buildDockerImages1
+  pool:
+    vmImage: 'ubuntu-16.04'
+  variables:
+    buildId: $[ dependencies.setBuildId.outputs['setBuildId.buildId'] ]
+  steps:
+  - bash: ci/generate_version_number.sh > VERSION
+    name: generateVersionFile
+    displayName: Generate Version File
+
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      buildType: 'current'
+      downloadType: 'single'
+      artifactName: 'Cuebot JAR'
+      downloadPath: '$(Build.ArtifactStagingDirectory)'
+
+  - bash: |
+      set -e
+      sed -i s/%version%/$(buildId)/g SPECS/cuebot.spec
+      cuebot/packaging/rpm/create_rpm.sh
+    name: createCuebotRpm
+    displayName: Create Cuebot RPM
