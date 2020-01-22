@@ -41,9 +41,9 @@ steps:
       -f ${{ parameters.imageName }}/Dockerfile \
       "."
 
-    docker push ${runtime_image_for_build_id}
-    docker push ${runtime_image_for_branch}
-    docker push ${runtime_image_latest}
+    #docker push ${runtime_image_for_build_id}
+    #docker push ${runtime_image_for_branch}
+    #docker push ${runtime_image_latest}
 
     # Create a temporary container from the runtime image but don't start it -- it's just
     # used to extract the packaged component for archiving and later release.
