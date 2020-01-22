@@ -49,7 +49,9 @@ steps:
     # used to extract the packaged component for archiving and later release.
     container_id=$(docker create ${runtime_image_for_build_id})
     
-    for artifact in "${{ parameters.artifactPaths }}"; do
+    artifacts="${{ parameters.artifactPaths }}"
+
+    for artifact in $artifacts; do
         docker cp $container_id:${artifact} "$(ARTIFACT_DIRECTORY)/"
     done
     
