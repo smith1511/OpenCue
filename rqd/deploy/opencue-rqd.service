@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 Environment=OPTIONS=
-Environment=BIN=/usr/bin
+Environment=BIN=/usr/local/bin
 EnvironmentFile=-/etc/sysconfig/opencue-rqd
 ExecStart=/bin/bash -c "${BIN}/rqd ${OPTIONS}"
 LimitNOFILE=500000
